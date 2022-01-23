@@ -39,30 +39,36 @@ public class QuestDBTester {
             CSVWriter writer = new CSVWriter(outputfile);
 
             // adding header to csv
-            String[] header = { "Trial", "Q1", "Q3", "Q4"};
+            String[] header = { "Trial", "Q1a", "Q1b", "Q1c", "Q3", "Q4"};
             writer.writeNext(header);
 
             // add data to csv
             System.out.println("BEGIN");
 
-            long single1 = query1();
+            long single1a = query1a();
+            long single1b = query1b();
+            long single1c = query1c();
+
             long single2 = query3();
             long single3 = query4();
-            System.out.println(single1);
+            System.out.println(single1a);
+            System.out.println(single1b);
+            System.out.println(single1c);
             System.out.println(single2);
             System.out.println(single3);
 
-            String[] data1 = { "SINGLE", String.valueOf(single1), String.valueOf(single2), String.valueOf(single3)};
+            String[] data1 = { "SINGLE", String.valueOf(single1a), String.valueOf(single1b), String.valueOf(single1c), String.valueOf(single2), String.valueOf(single3)};
             writer.writeNext(data1);
 
             for (int i = 0; i < num_tests; i++) {
-                long data = query1();
+                long data1a = query1a();
+                long data1b = query1b();
+                long data1c = query1c();
                 long data2 = query3();
                 long data3 = query4();
-                System.out.println(data);
                 System.out.println(data2);
                 System.out.println(data3);
-                String[] text2 = {String.valueOf(i), String.valueOf(data), String.valueOf(data2), String.valueOf(data3)};
+                String[] text2 = {String.valueOf(i), String.valueOf(data1a), String.valueOf(data1b), String.valueOf(data1c), String.valueOf(data2), String.valueOf(data3)};
                 writer.writeNext(text2);
             }
             writer.close();
@@ -77,7 +83,7 @@ public class QuestDBTester {
         new QuestDBTester();
     }
 
-    public static long query1() throws SQLException
+    public static long query1a() throws SQLException
     {
         System.out.println("BEGIN1");
         long startTime = System.nanoTime();
@@ -85,23 +91,6 @@ public class QuestDBTester {
             System.out.println("BEGIN2");
             try (ResultSet rs = preparedStatement.executeQuery()) {
                 System.out.println("BEGIN3");
-
-                try (PreparedStatement preparedStatement2 = connection.prepareStatement("SELECT id, TradeDate, year(TradeDate), avg(ClosePrice), max(ClosePrice), min(ClosePrice) from price, WHERE year(TradeDate) > 2022 AND year(TradeDate) < 2032 GROUP by id, TradeDate, year(TradeDate) ORDER BY id, TradeDate;")) {
-                    System.out.println("BEGIN4");
-
-                    try (ResultSet rs2 = preparedStatement2.executeQuery()) {
-                        System.out.println("BEGIN5");
-
-                        try (PreparedStatement preparedStatement3 = connection.prepareStatement("SELECT id, TradeDate, day(TradeDate), avg(ClosePrice), max(ClosePrice), min(ClosePrice) from price, WHERE year(TradeDate) > 2022 AND year(TradeDate) < 2032 GROUP by id, TradeDate, day(TradeDate) ORDER BY id, TradeDate;")) {
-                            System.out.println("BEGIN6");
-
-                            try (ResultSet rs3 = preparedStatement3.executeQuery()) {
-                                System.out.println("BEGIN7");
-
-                            }
-                        }
-                    }
-                }
             }
         }
         System.out.println("BEGIN8");
@@ -111,6 +100,52 @@ public class QuestDBTester {
         return (endTime-startTime);
 
     }
+
+    public static long query1b() throws SQLException
+    {
+        System.out.println("BEGIN1");
+        long startTime = System.nanoTime();
+
+                try (PreparedStatement preparedStatement2 = connection.prepareStatement("SELECT id, TradeDate, year(TradeDate), avg(ClosePrice), max(ClosePrice), min(ClosePrice) from price, WHERE year(TradeDate) > 2022 AND year(TradeDate) < 2032 GROUP by id, TradeDate, year(TradeDate) ORDER BY id, TradeDate;")) {
+                    System.out.println("BEGIN4");
+
+                    try (ResultSet rs2 = preparedStatement2.executeQuery()) {
+                        System.out.println("BEGIN5");
+
+                    }
+
+        }
+        System.out.println("BEGIN8");
+
+        long endTime = System.nanoTime();
+        System.out.println(endTime-startTime);
+        return (endTime-startTime);
+
+    }
+
+    public static long query1c() throws SQLException
+    {
+        System.out.println("BEGIN1");
+        long startTime = System.nanoTime();
+
+
+                        try (PreparedStatement preparedStatement3 = connection.prepareStatement("SELECT id, TradeDate, day(TradeDate), avg(ClosePrice), max(ClosePrice), min(ClosePrice) from price, WHERE year(TradeDate) > 2022 AND year(TradeDate) < 2032 GROUP by id, TradeDate, day(TradeDate) ORDER BY id, TradeDate;")) {
+                            System.out.println("BEGIN6");
+
+                            try (ResultSet rs3 = preparedStatement3.executeQuery()) {
+                                System.out.println("BEGIN7");
+
+
+            }
+        }
+        System.out.println("BEGIN8");
+
+        long endTime = System.nanoTime();
+        System.out.println(endTime-startTime);
+        return (endTime-startTime);
+
+    }
+
 
     public static long query3() throws SQLException {
         long startTime = System.nanoTime();
