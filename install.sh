@@ -26,3 +26,32 @@ sudo docker run -p 9000:9000 \
  # shut the container down
  # sudo docker stop docker_questdb
  # git clone https://github.com/sen-yigit/TEMGData
+ 
+ 
+ 
+ ###HOW TO USE IT
+ # 1) COPY THIS FILE TO SERVER
+ # 2) nano install.sh 
+ # 3) copy inside into the file
+ # 4) sudo chmod 777 install.sh
+ # 5) sudo ./install.sh
+ # 6) control-c to close the server first
+ # 7) sudo docker start docker_questdb
+ # 8) git clone https://github.com/sen-yigit/TEMGData
+ # 9) IT MIGHT FREEZE AT POINT, IF IT FREEZES, control c when you see Filtering content:  94% (17/18) (OR JUST WAIT!)
+ # 10) IF IT FREEZES, control-c and then git checkout -f HEAD
+ # 11) ONCE IT'S DONE
+ #     cd TEMGData
+ #     nano ingressTest.sh
+ #     copy the ingresstest file into the file
+ #     sudo chmod 777 ingressTest.sh
+ #     ./ingressTest.sh
+ #     SAVE THE OUTPUT
+ # 12) AT THE CLIENT 
+ #     CLONE THIS PACKAGE
+ #     cd Quest_Tester
+ #     mvn package
+ #     EDIT .env FILE - ONLY EDIT THE IP ADDRESS AND THE NUMBER OF TESTS, DO NOT TOUCH THE REST OF THE LINK!
+ #     java -cp target/QuestTester-1.0-SNAPSHOT.jar QuestDBTester
+ #     THERE SHOULD BE A CSV FILE PRINTING OUT (FIRST TEST THIS WITH NUM TESTS = 1
+ 
